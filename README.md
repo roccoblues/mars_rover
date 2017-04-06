@@ -4,8 +4,7 @@
 
 # Mars Rovers
 
-This is an implementation of the mars rovers kata in Golang which
-serves as a testing ground for teaching myself the language.
+This is an implementation of the mars rovers kata in Golang.
 
 ## Description
 
@@ -65,5 +64,6 @@ TODO
 
 ## Building and running the CLI
 ```
-TODO
+go install
+cat mission.txt | mars_rovers
 ```
