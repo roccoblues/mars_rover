@@ -9,17 +9,17 @@ import (
 var validDirections = [4]rune{'N', 'E', 'S', 'W'}
 var validCommands = [3]rune{'L', 'R', 'M'}
 
-func convertCoordinates(c []string) (x uint, y uint, err error) {
+func convertCoordinates(c []string) (uint, uint, error) {
 	if len(c) != 2 {
 		return 0, 0, fmt.Errorf("Invalid coordinates: %s", c)
 	}
 
-	x, err = convertCoordinate(c[0])
+	x, err := convertCoordinate(c[0])
 	if err != nil {
 		return 0, 0, err
 	}
 
-	y, err = convertCoordinate(c[1])
+	y, err := convertCoordinate(c[1])
 	if err != nil {
 		return 0, 0, err
 	}
