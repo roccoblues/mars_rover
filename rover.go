@@ -23,7 +23,8 @@ func NewRover(pos, commands string) (*rover, error) {
 }
 
 func (r *rover) Deploy(p *plateau) error {
-	if err := p.Put(r.X, r.Y, r); err != nil {
+	err := p.put(r.x, r.y, r)
+	if err != nil {
 		return err
 	}
 

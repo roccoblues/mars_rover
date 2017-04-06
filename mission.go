@@ -37,10 +37,12 @@ func NewMission(input []string) (*mission, error) {
 
 func (m *mission) Run() error {
 	for _, r := range m.Rovers {
-		if err := r.Deploy(m.Plateau); err != nil {
+		err := r.deploy(m.plateau)
+		if err != nil {
 			return err
 		}
-		if err := r.Run(); err != nil {
+		err = r.run()
+		if err != nil {
 			return err
 		}
 	}
