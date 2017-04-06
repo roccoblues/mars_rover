@@ -3,9 +3,15 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"log"
 	"os"
 )
+
+func checkError(err error) {
+	if err != nil {
+		fmt.Printf("ERROR: %s\n", err)
+		os.Exit(1)
+	}
+}
 
 func main() {
 	input := []string{}
@@ -13,19 +19,16 @@ func main() {
 	for scanner.Scan() {
 		input = append(input, scanner.Text())
 	}
-	if err := scanner.Err(); err != nil {
-		panic(err)
-	}
+	err := scanner.Err()
+	checkError(err)
 
-	mission, err := NewMission(input)
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-	if err = mission.Run(); err != nil {
-		log.Fatal(err)
-	}
-	for _, r := range mission.Rovers {
-		fmt.Printf("%d %d %c\n", r.X, r.Y, r.Direction)
+	mission, err := newMission(input)
+	checkError(err)
+
+	err = mission.run()
+	checkError(err)
+
+	for _, r := range mission.rovers {
+		fmt.Printf("%d %d %c\n", r.x, r.y, r.direction)
 	}
 }

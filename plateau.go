@@ -27,10 +27,10 @@ func NewPlateau(s string) (*plateau, error) {
 
 func (p *plateau) Put(x uint, y uint, r *rover) error {
 	if !p.insidePlateau(x, y) {
-		return fmt.Errorf("Position out of plateau: %d %d", x, y)
+		return fmt.Errorf("Position %d,%d is outside of plateau.", x, y)
 	}
 	if !p.cellEmpty(x, y) {
-		return fmt.Errorf("Cell occupied: %d %d", x, y)
+		return fmt.Errorf("Cell %d,%d is occupied.", x, y)
 	}
 
 	p.cells[x][y] = r
