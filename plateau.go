@@ -11,7 +11,7 @@ type plateau struct {
 	cells [][]*rover
 }
 
-func NewPlateau(s string) (*plateau, error) {
+func newPlateau(s string) (*plateau, error) {
 	x, y, err := convertCoordinates(strings.Fields(s))
 	if err != nil {
 		return nil, err
@@ -25,7 +25,7 @@ func NewPlateau(s string) (*plateau, error) {
 	return &plateau{x, y, cells}, nil
 }
 
-func (p *plateau) Put(x uint, y uint, r *rover) error {
+func (p *plateau) put(x uint, y uint, r *rover) error {
 	if !p.insidePlateau(x, y) {
 		return fmt.Errorf("Position %d,%d is outside of plateau.", x, y)
 	}
@@ -38,9 +38,9 @@ func (p *plateau) Put(x uint, y uint, r *rover) error {
 	return nil
 }
 
-func (p *plateau) Update(oldX, oldY, newX, newY uint, r *rover) error {
+func (p *plateau) update(oldX, oldY, newX, newY uint, r *rover) error {
 	p.cells[oldX][oldY] = nil
-	return p.Put(newX, newY, r)
+	return p.put(newX, newY, r)
 }
 
 func (p *plateau) cellEmpty(x uint, y uint) bool {

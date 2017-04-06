@@ -1,14 +1,14 @@
 package main
 
 type rover struct {
-	X         uint
-	Y         uint
-	Direction rune
-	Commands  []rune
-	Plateau   *plateau
+	x         uint
+	y         uint
+	direction rune
+	commands  []rune
+	plateau   *plateau
 }
 
-func NewRover(pos, commands string) (*rover, error) {
+func newRover(p, c string) (*rover, error) {
 	x, y, direction, err := convertPosition(p)
 	if err != nil {
 		return nil, err
@@ -22,19 +22,19 @@ func NewRover(pos, commands string) (*rover, error) {
 	return &rover{x, y, direction, commands, nil}, nil
 }
 
-func (r *rover) Deploy(p *plateau) error {
+func (r *rover) deploy(p *plateau) error {
 	err := p.put(r.x, r.y, r)
 	if err != nil {
 		return err
 	}
 
-	r.Plateau = p
+	r.plateau = p
 
 	return nil
 }
 
-func (r *rover) Run() error {
-	for _, c := range r.Commands {
+func (r *rover) run() error {
+	for _, c := range r.commands {
 		err := r.applyCommand(c)
 		if err != nil {
 			return err
@@ -47,48 +47,48 @@ func (r *rover) Run() error {
 func (r *rover) applyCommand(c rune) error {
 	switch c {
 	case 'R':
-		switch r.Direction {
+		switch r.direction {
 		case 'N':
-			r.Direction = 'E'
+			r.direction = 'E'
 		case 'E':
-			r.Direction = 'S'
+			r.direction = 'S'
 		case 'S':
-			r.Direction = 'W'
+			r.direction = 'W'
 		case 'W':
-			r.Direction = 'N'
+			r.direction = 'N'
 		}
 	case 'L':
-		switch r.Direction {
+		switch r.direction {
 		case 'N':
-			r.Direction = 'W'
+			r.direction = 'W'
 		case 'E':
-			r.Direction = 'N'
+			r.direction = 'N'
 		case 'S':
-			r.Direction = 'E'
+			r.direction = 'E'
 		case 'W':
-			r.Direction = 'S'
+			r.direction = 'S'
 		}
 	case 'M':
-		newX := r.X
-		newY := r.Y
-		switch r.Direction {
+		newX := r.x
+		newY := r.y
+		switch r.direction {
 		case 'N':
-			newY = r.Y + 1
+			newY = r.y + 1
 		case 'E':
-			newX = r.X + 1
+			newX = r.x + 1
 		case 'S':
-			newY = r.Y - 1
+			newY = r.y - 1
 		case 'W':
-			newX = r.X - 1
+			newX = r.x - 1
 		}
 
-		err := r.Plateau.Update(r.X, r.Y, newX, newY, r)
+		err := r.plateau.update(r.x, r.y, newX, newY, r)
 		if err != nil {
 			return err
 		}
 
-		r.X = newX
-		r.Y = newY
+		r.x = newX
+		r.y = newY
 	}
 
 	return nil
