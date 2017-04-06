@@ -1,9 +1,5 @@
 package main
 
-import (
-	"strings"
-)
-
 type rover struct {
 	X         uint
 	Y         uint
@@ -13,23 +9,17 @@ type rover struct {
 }
 
 func NewRover(pos, commands string) (*rover, error) {
-	posFields := strings.Fields(pos)
-	x, y, err := convertCoordinates(posFields[0:2])
+	x, y, direction, err := convertPosition(p)
 	if err != nil {
 		return nil, err
 	}
 
-	d, err := convertDirection(posFields[2])
+	commands, err := convertCommands(c)
 	if err != nil {
 		return nil, err
 	}
 
-	c, err := convertCommands(commands)
-	if err != nil {
-		return nil, err
-	}
-
-	return &rover{x, y, d, c, nil}, nil
+	return &rover{x, y, direction, commands, nil}, nil
 }
 
 func (r *rover) Deploy(p *plateau) error {

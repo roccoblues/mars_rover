@@ -9,6 +9,21 @@ import (
 var validDirections = [4]rune{'N', 'E', 'S', 'W'}
 var validCommands = [3]rune{'L', 'R', 'M'}
 
+func convertPosition(s string) (uint, uint, rune, error) {
+	pos := strings.Fields(s)
+	x, y, err := convertCoordinates(pos[0:2])
+	if err != nil {
+		return 0, 0, 'X', err
+	}
+
+	d, err := convertDirection(pos[2])
+	if err != nil {
+		return 0, 0, 'X', err
+	}
+
+	return x, y, d, nil
+}
+
 func convertCoordinates(c []string) (uint, uint, error) {
 	if len(c) != 2 {
 		return 0, 0, fmt.Errorf("Invalid coordinates: %s", c)
