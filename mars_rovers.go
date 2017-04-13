@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"os"
 )
@@ -14,21 +13,11 @@ func checkError(err error) {
 }
 
 func main() {
-	input := []string{}
-	scanner := bufio.NewScanner(os.Stdin)
-	for scanner.Scan() {
-		input = append(input, scanner.Text())
-	}
-	err := scanner.Err()
+	m, err := NewMission(os.Stdin)
 	checkError(err)
 
-	mission, err := newMission(input)
+	err = m.Run()
 	checkError(err)
 
-	err = mission.run()
-	checkError(err)
-
-	for _, r := range mission.rovers {
-		fmt.Printf("%d %d %c\n", r.x, r.y, r.direction)
-	}
+	fmt.Print(m.Result())
 }

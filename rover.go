@@ -1,77 +1,54 @@
 package main
 
 type rover struct {
-	x         uint
-	y         uint
-	direction rune
-	commands  []rune
-	plateau   *plateau
+	x int
+	y int
+	d rune
+	p *plateau
 }
 
-func newRover(p, c string) (*rover, error) {
-	x, y, direction, err := convertPosition(p)
-	if err != nil {
-		return nil, err
-	}
-
-	commands, err := convertCommands(c)
-	if err != nil {
-		return nil, err
-	}
-
-	return &rover{x, y, direction, commands, nil}, nil
+func NewRover(x, y int, d rune) *rover {
+	return &rover{x, y, d, nil}
 }
 
-func (r *rover) deploy(p *plateau) error {
-	err := p.put(r.x, r.y, r)
+func (r *rover) Deploy(p *plateau) error {
+	err := p.Put(r.x, r.y, r)
 	if err != nil {
 		return err
 	}
 
-	r.plateau = p
-
+	r.p = p
 	return nil
 }
 
-func (r *rover) run() error {
-	for _, c := range r.commands {
-		err := r.applyCommand(c)
-		if err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (r *rover) applyCommand(c rune) error {
+func (r *rover) ApplyCommand(c rune) error {
 	switch c {
 	case 'R':
-		switch r.direction {
+		switch r.d {
 		case 'N':
-			r.direction = 'E'
+			r.d = 'E'
 		case 'E':
-			r.direction = 'S'
+			r.d = 'S'
 		case 'S':
-			r.direction = 'W'
+			r.d = 'W'
 		case 'W':
-			r.direction = 'N'
+			r.d = 'N'
 		}
 	case 'L':
-		switch r.direction {
+		switch r.d {
 		case 'N':
-			r.direction = 'W'
+			r.d = 'W'
 		case 'E':
-			r.direction = 'N'
+			r.d = 'N'
 		case 'S':
-			r.direction = 'E'
+			r.d = 'E'
 		case 'W':
-			r.direction = 'S'
+			r.d = 'S'
 		}
 	case 'M':
 		newX := r.x
 		newY := r.y
-		switch r.direction {
+		switch r.d {
 		case 'N':
 			newY = r.y + 1
 		case 'E':
@@ -82,7 +59,7 @@ func (r *rover) applyCommand(c rune) error {
 			newX = r.x - 1
 		}
 
-		err := r.plateau.update(r.x, r.y, newX, newY, r)
+		err := r.p.Update(r.x, r.y, newX, newY)
 		if err != nil {
 			return err
 		}

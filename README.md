@@ -1,6 +1,4 @@
 [![Build Status](https://travis-ci.org/roccoblues/mars_rovers.svg?branch=master)](https://travis-ci.org/roccoblues/mars_rovers)
-[![Coverage Status](https://coveralls.io/repos/github/roccoblues/mars_rovers/badge.svg?branch=master)](https://coveralls.io/github/roccoblues/mars_rovers?branch=master)
-
 
 # Mars Rovers
 
@@ -59,7 +57,7 @@ heading.
 
 ## Running tests
 ```
-TODO
+go test
 ```
 
 ## Building and running the CLI
