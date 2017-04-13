@@ -2,7 +2,7 @@
 
 # Mars Rovers
 
-This is an implementation of the mars rovers kata in Golang.
+This is an implementation of the mars rovers kata in Go.
 
 ## Description
 
